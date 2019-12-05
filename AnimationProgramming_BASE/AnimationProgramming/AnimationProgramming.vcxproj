@@ -158,9 +158,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="include\AnimationData.h" />
     <ClInclude Include="include\Bone.h" />
     <ClInclude Include="include\Engine.h" />

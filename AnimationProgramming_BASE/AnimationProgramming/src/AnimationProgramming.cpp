@@ -12,7 +12,7 @@
 class CSimulation : public ISimulation
 {
     Animation::Skeleton MySkeleton;
-    InputManager inMan;
+    InputManager InputManager;
 
 	virtual void Init() override
 	{
@@ -21,30 +21,47 @@ class CSimulation : public ISimulation
         MySkeleton.AddAnimation("ThirdPersonRun.anim");
 	}
 
-	virtual void Update(float frameTime) override
-	{
+    virtual void Update(float frameTime) override
+    {
 
         static int state = 0;
         static float m_time = 0;
         static float speed = 5;
         m_time += frameTime * speed;
+        static bool Gizmos = false;
 
-        if (inMan.GetKey('Q'))
+        if (InputManager.GetKeyDown('1'))
         {
-            std::cout << "Q hold\n";
+            std::cout << "Playing waling animation\n\n";
+            state = 0;
+        }
+        if (InputManager.GetKeyDown('2'))
+        {
+            std::cout << "Playing running animation\n\n";
+            state = 1;
         }
 
-        if (inMan.GetKeyDown('E'))
+        if (InputManager.GetKeyDown('G'))
         {
-            std::cout << "E pressed\n";
+            Gizmos = !Gizmos;
         }
 
-        if (inMan.GetKeyUp('R'))
+        if (InputManager.GetKeyDown(VK_UP))
         {
-            std::cout << "R released\n";
+            speed += 5;
+            std::cout << "Increase speed by 5 units\n";
+            std::cout << "New speed : " << speed << "\n\n";
+        }
+        if (InputManager.GetKeyDown(VK_DOWN))
+        {
+            speed -= 5;
+            if (speed < 0)
+                speed = 0;
+            std::cout << "Decrease speed by 5 units\n";
+            std::cout << "New speed : " << speed << "\n\n";
         }
 
-        switch(state)
+        switch (state)
         {
         case 0:
             MySkeleton.Animate("ThirdPersonWalk.anim", m_time);
@@ -56,14 +73,13 @@ class CSimulation : public ISimulation
             break;
         }
 
-            MySkeleton.Animate("ThirdPersonWalk.anim", m_time);
-        // std::cout << "time : " << m_time << '\n';
-        // MySkeleton.DrawSkeleton();
-
-        DrawLine(0, 0, 0, 100, 0, 0, 1, 0, 0);
-        DrawLine(0, 0, 0, 0, 100, 0, 0, 1, 0);
-        DrawLine(0, 0, 0, 0, 0, 100, 0, 0, 1);
-	}
+        if (Gizmos)
+        {
+            DrawLine(0, 0, 0, 100, 0, 0, 1, 0, 0);
+            DrawLine(0, 0, 0, 0, 100, 0, 0, 1, 0);
+            DrawLine(0, 0, 0, 0, 0, 100, 0, 0, 1);
+        }
+    }
 };
 
 int main()
