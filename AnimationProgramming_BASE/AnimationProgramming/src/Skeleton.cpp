@@ -43,19 +43,35 @@ void Animation::Skeleton::CalculateBoneWorld()
     }
 }
 
-void Animation::Skeleton::Animate(const char* p_animation, int p_frame)
+void Animation::Skeleton::AddAnimation(const char* p_name)
+{
+    AnimationData tmpAnim(p_name);
+    m_animData.try_emplace(p_name, tmpAnim);
+}
+
+void Animation::Skeleton::Animate(const char* p_animation, float p_deltaTime)
 {
     float matrixData[976];
 
+
     for (int i = 0; i < m_bones.size(); ++i)
     {
-        float X, Y, Z, qW, qX, qY, qZ;
-        GetAnimLocalBoneTransform(p_animation, i, p_frame, X, Y, Z, qW, qX, qY, qZ);
+        float frameScale = Tools::Utils::GetDecimalPart(p_deltaTime);
+        std::vector<std::vector<std::pair<Vector3F, Quaternion>>> tmpdata = m_animData[p_animation].m_data;
+        int frame = static_cast<int>(p_deltaTime);
 
-        Vector3F pos{ X, Y, Z };
-        Quaternion rot{ qX, qY, qZ, qW };
+        int size = tmpdata.size() - 1;
 
-        Matrix4F localAnim = Matrix4F::CreateTransformation(pos, rot, Vector3F::one);
+        Vector3F currPos = tmpdata[frame % size][i].first;
+        Vector3F nextPos = tmpdata[(frame + 1) % size][i].first;
+
+        Quaternion currRot = tmpdata[frame % size][i].second;
+        Quaternion nextRot = tmpdata[(frame + 1) % size][i].second;
+
+        Vector3F thisPos = Vector3F::Lerp(currPos, nextPos, frameScale);
+        Quaternion thisRot = Quaternion::SlerpShortestPath(currRot, nextRot, frameScale);
+
+        Matrix4F localAnim = Matrix4F::CreateTransformation(thisPos, thisRot, Vector3F::one);
 
         if (m_bones[i].m_parentIndex >= 0)
             m_bones[i].m_worldMatrix = (m_bones[m_bones[i].m_parentIndex].m_worldMatrix * m_bones[i].m_TPoseLocalMatrix * localAnim);
