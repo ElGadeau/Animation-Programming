@@ -6,9 +6,6 @@ change animation to WalkAnimation
 Press 2:
 change animation to RunAnimation
 
-Press G:
-Enable/Disable Gizmos
-
 Press UP key:
 Increase animation speed
 

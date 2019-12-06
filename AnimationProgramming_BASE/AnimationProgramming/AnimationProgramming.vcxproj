@@ -161,6 +161,7 @@
     <ClInclude Include="include\AnimationData.h" />
     <ClInclude Include="include\Bone.h" />
     <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\InputManager.h" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Skeleton.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\AnimationData.cpp" />
     <ClCompile Include="src\AnimationProgramming.cpp" />
     <ClCompile Include="src\Bone.cpp" />
+    <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Skeleton.cpp" />
     <ClCompile Include="src\stdafx.cpp" />

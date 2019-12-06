@@ -1,5 +1,10 @@
 #include <Bone.h>
 
+Animation::Bone::Bone(int p_index, int p_parentIndex, const char* p_name) : m_index(p_index), m_parentIndex(p_parentIndex), m_name(p_name)
+{
+    parent = nullptr;
+}
+
 Animation::Bone::Bone(Bone& p_bone)
 {
     m_index = p_bone.m_index;

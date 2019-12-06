@@ -9,7 +9,7 @@ namespace Animation
     {
     public:
         Bone() = default;
-        Bone(int p_index, int p_parentIndex, const char* p_name) : m_index(p_index), m_parentIndex(p_parentIndex), m_name(p_name) {}
+        Bone(int p_index, int p_parentIndex, const char* p_name);
         Bone(Bone& p_bone);
         Bone(Bone&& p_bone);
 
@@ -22,6 +22,8 @@ namespace Animation
         int m_parentIndex;
         std::string m_name;
 
+
+        Bone* parent;
         Matrix4F m_worldMatrix;
         Matrix4F m_TPoseLocalMatrix;
         Matrix4F m_TPoseWorldMatrix;
