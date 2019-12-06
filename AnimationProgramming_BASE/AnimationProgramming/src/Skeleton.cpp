@@ -4,6 +4,7 @@
 void Animation::Skeleton::Init()
 {
     m_animState = 0;
+    m_speed = 5;
     SetBones();
     SetParents();
     CalculateBoneWorld();
@@ -41,6 +42,9 @@ void Animation::Skeleton::CalculateBoneWorld()
     //setting world matrix for bones
     for (auto& m_bone : m_bones)
     {
+        if (m_bone.parent == nullptr)
+            continue;
+
         if (m_bone.m_parentIndex == -1)
         {
             m_bone.m_TPoseWorldMatrix = m_bone.m_TPoseLocalMatrix;
@@ -68,7 +72,12 @@ void Animation::Skeleton::Animate(const char* p_animation, float p_deltaTime)
         Matrix4F localAnim = CalculateNewLocal(p_animation, p_deltaTime, i);
 
         if (m_bones[i].m_parentIndex >= 0)
+        {
+            if (m_bones[i].parent == nullptr)
+                continue;
+
             m_bones[i].m_worldMatrix = (m_bones[i].parent->m_worldMatrix * m_bones[i].m_TPoseLocalMatrix * localAnim);
+        }
         else
             m_bones[i].m_worldMatrix = (m_bones[i].m_TPoseLocalMatrix * localAnim);
 

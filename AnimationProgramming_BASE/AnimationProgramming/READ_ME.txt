@@ -10,7 +10,7 @@ Press UP key:
 Increase animation speed
 
 Press DOWN key:
-Decrease animation speed
+Decrease animation speed (speed cannot go under 0)
 
 Press WASD key:
 Control camera movements
