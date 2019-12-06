@@ -19,10 +19,10 @@ ENGINE_API const char*	GetSkeletonBoneName(int boneIndex);
 
 ENGINE_API int			GetSkeletonBoneIndex(const char* name);
 
-// return -1 if the bone doesn't have parent
+// return -1 if the bone doesn't have m_parent
 ENGINE_API int			GetSkeletonBoneParentIndex(int boneIndex);
 
-// return local transform (ie relative to the parent) of the bone in the bind pose (or rest pose, also called T-pose)
+// return local transform (ie relative to the m_parent) of the bone in the bind pose (or rest pose, also called T-pose)
 ENGINE_API void			GetSkeletonBoneLocalBindTransform(int boneIndex, float& posX, float& posY, float& posZ, float& quatW, float& quatX, float& quatY, float& quatZ);
 
 ENGINE_API size_t		GetAnimKeyCount(const char* animName);

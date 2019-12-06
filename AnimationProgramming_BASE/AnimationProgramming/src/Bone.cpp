@@ -2,7 +2,7 @@
 
 Animation::Bone::Bone(int p_index, int p_parentIndex, const char* p_name) : m_index(p_index), m_parentIndex(p_parentIndex), m_name(p_name)
 {
-    parent = nullptr;
+    m_parent = nullptr;
 }
 
 Animation::Bone::Bone(Bone& p_bone)
@@ -13,6 +13,7 @@ Animation::Bone::Bone(Bone& p_bone)
     m_worldMatrix = p_bone.m_worldMatrix;
     m_TPoseLocalMatrix = p_bone.m_TPoseLocalMatrix;
     m_TPoseWorldMatrix = p_bone.m_TPoseWorldMatrix;
+    m_parent = p_bone.m_parent;
 }
 
 Animation::Bone::Bone(Bone&& p_bone)
@@ -23,9 +24,10 @@ Animation::Bone::Bone(Bone&& p_bone)
     m_worldMatrix = p_bone.m_worldMatrix;
     m_TPoseLocalMatrix = p_bone.m_TPoseLocalMatrix;
     m_TPoseWorldMatrix = p_bone.m_TPoseWorldMatrix;
+    m_parent = p_bone.m_parent;
 }
 
-Vector3F Animation::Bone::GetWorldPosition()
+Vector3F Animation::Bone::GetWorldPosition() const
 {
     const float x = m_worldMatrix[3];
     const float y = m_worldMatrix[7];

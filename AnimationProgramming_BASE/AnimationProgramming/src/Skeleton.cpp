@@ -33,7 +33,7 @@ void Animation::Skeleton::SetParents()
 {
     for (int i = 0; i < GetSkeletonBoneCount() - 7; ++i)
     {
-        m_bones[i].parent = &m_bones[m_bones[i].m_parentIndex];
+        m_bones[i].m_parent = &m_bones[m_bones[i].m_parentIndex];
     }
 }
 
@@ -42,7 +42,7 @@ void Animation::Skeleton::CalculateBoneWorld()
     //setting world matrix for bones
     for (auto& m_bone : m_bones)
     {
-        if (m_bone.parent == nullptr)
+        if (m_bone.m_parent == nullptr)
             continue;
 
         if (m_bone.m_parentIndex == -1)
@@ -51,7 +51,7 @@ void Animation::Skeleton::CalculateBoneWorld()
         }
         else
         {
-            const Matrix4F worldTrs = m_bone.parent->m_TPoseWorldMatrix * m_bone.m_TPoseLocalMatrix;
+            const Matrix4F worldTrs = m_bone.m_parent->m_TPoseWorldMatrix * m_bone.m_TPoseLocalMatrix;
             m_bone.m_TPoseWorldMatrix = worldTrs;
         }
     }
@@ -73,10 +73,10 @@ void Animation::Skeleton::Animate(const char* p_animation, float p_deltaTime)
 
         if (m_bones[i].m_parentIndex >= 0)
         {
-            if (m_bones[i].parent == nullptr)
+            if (m_bones[i].m_parent == nullptr)
                 continue;
 
-            m_bones[i].m_worldMatrix = (m_bones[i].parent->m_worldMatrix * m_bones[i].m_TPoseLocalMatrix * localAnim);
+            m_bones[i].m_worldMatrix = (m_bones[i].m_parent->m_worldMatrix * m_bones[i].m_TPoseLocalMatrix * localAnim);
         }
         else
             m_bones[i].m_worldMatrix = (m_bones[i].m_TPoseLocalMatrix * localAnim);

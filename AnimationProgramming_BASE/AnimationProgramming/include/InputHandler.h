@@ -8,7 +8,7 @@ public:
     InputHandler();
     ~InputHandler();
 
-    void ProcessInputs(Animation::Skeleton& p_skeleton);
+    void ProcessInputs(Animation::Skeleton& p_skeleton) const;
 
 private:
     InputManager* m_inputManager;

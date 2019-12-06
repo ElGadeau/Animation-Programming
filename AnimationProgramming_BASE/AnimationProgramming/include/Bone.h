@@ -11,9 +11,9 @@ namespace Animation
         Bone() = default;
         Bone(int p_index, int p_parentIndex, const char* p_name);
         Bone(Bone& p_bone);
-        Bone(Bone&& p_bone);
+        Bone(Bone&& p_bone) noexcept;
 
-        Vector3F GetWorldPosition();
+        Vector3F GetWorldPosition() const;
 
         static void DrawBone(std::vector<Bone>& p_bones);
         static void DrawTPose(std::vector<Bone>& p_bones);
@@ -23,7 +23,7 @@ namespace Animation
         std::string m_name;
 
 
-        Bone* parent;
+        Bone* m_parent;
         Matrix4F m_worldMatrix;
         Matrix4F m_TPoseLocalMatrix;
         Matrix4F m_TPoseWorldMatrix;

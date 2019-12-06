@@ -11,7 +11,7 @@ InputHandler::~InputHandler()
     delete m_inputManager;
 }
 
-void InputHandler::ProcessInputs(Animation::Skeleton& p_skeleton)
+void InputHandler::ProcessInputs(Animation::Skeleton& p_skeleton) const
 {
     if (m_inputManager->GetKeyDown('1'))
     {
